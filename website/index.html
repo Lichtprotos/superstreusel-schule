@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superstreusel | Zuckerstreusel für jeden Anlass</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #FAFAFA;
+            --text: #1A1A1A;
+            --accent: #E8566A;
+            --accent-light: #f07a8a;
+            --muted: #666;
+            --border: #E5E5E5;
+            --surface: #fff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 400; }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(250,250,250,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            letter-spacing: 3px;
+            color: var(--accent);
+        }
+
+        .nav-links { display: flex; gap: 3rem; list-style: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-links a { text-decoration: none; color: var(--text); transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* Hero */
+        .hero {
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding: 0 4rem;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(3rem, 5vw, 5rem);
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .hero-content h1 span { color: var(--accent); }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--muted);
+            margin-bottom: 2rem;
+            max-width: 420px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            border: 1px solid var(--accent);
+        }
+
+        .btn:hover { background: transparent; color: var(--accent); }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--text);
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover { background: var(--text); color: white; }
+
+        .hero-image {
+            height: 80vh;
+            background: url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=900&q=80') center/cover;
+            position: relative;
+        }
+
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            inset: 20px;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        /* Sections */
+        section { padding: 8rem 4rem; max-width: 1200px; margin: 0 auto; }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 { font-size: 3rem; margin-bottom: 1rem; }
+        .section-header p { color: var(--muted); font-size: 1.1rem; }
+
+        /* About */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4rem;
+            text-align: center;
+        }
+
+        .about-item h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .about-item p { color: var(--muted); font-size: 0.95rem; }
+
+        .divider {
+            width: 40px;
+            height: 1px;
+            background: var(--accent);
+            margin: 2rem auto;
+        }
+
+        /* Products */
+        .products-section { background: var(--surface); }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+        }
+
+        .product-item {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .product-item h4 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .product-item p { color: var(--muted); font-size: 0.9rem; max-width: 300px; }
+
+        .price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .gallery-item:hover img { transform: scale(1.1); }
+
+        /* Story */
+        .story-section {
+            background: linear-gradient(135deg, #fff5f6 0%, #fff 100%);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 6rem 4rem;
+        }
+
+        .story-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .story-text h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+
+        .story-text p {
+            color: var(--muted);
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .story-image {
+            height: 500px;
+            background: url('https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=700&q=80') center/cover;
+        }
+
+        /* Reviews */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .review-card {
+            padding: 2rem;
+            border: 1px solid var(--border);
+            text-align: center;
+            background: white;
+        }
+
+        .stars { color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem; }
+
+        .review-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .reviewer {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Contact */
+        .contact-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info h3 { font-size: 2rem; margin-bottom: 2rem; }
+
+        .contact-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .contact-item h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            color: var(--muted);
+        }
+
+        .contact-visual {
+            background: url('https://images.unsplash.com/photo-1546548970-71785318a17b?w=700&q=80') center/cover;
+            height: 500px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text);
+            color: white;
+            padding: 4rem;
+            text-align: center;
+        }
+
+        footer .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            letter-spacing: 4px;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        footer p {
+            opacity: 0.5;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            background: #fff5f6;
+            color: var(--accent);
+            border: 1px solid #f5c6cb;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 0.3rem 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: var(--text);
+            display: block;
+            transition: all 0.3s;
+        }
+
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        @media (max-width: 968px) {
+            nav { padding: 1rem 2rem; }
+            .hamburger { display: flex; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: fixed;
+                top: 65px;
+                left: 0;
+                right: 0;
+                background: var(--bg);
+                border-bottom: 1px solid var(--border);
+                padding: 1.5rem 2rem;
+                gap: 1.5rem;
+                z-index: 999;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                list-style: none;
+            }
+            .nav-links.open { display: flex; }
+            .hero { grid-template-columns: 1fr; padding-top: 80px; }
+            .hero-image { height: 50vh; }
+            .about-grid, .products-grid, .reviews-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .contact-section, .story-inner { grid-template-columns: 1fr; }
+            section { padding: 4rem 1.5rem; }
+            .story-section { padding: 4rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">SUPERSTREUSEL</div>
+        <ul class="nav-links">
+            <li><a href="#ueber-uns">Über uns</a></li>
+            <li><a href="#produkte">Produkte</a></li>
+            <li><a href="#galerie">Galerie</a></li>
+            <li><a href="#geschichte">Geschichte</a></li>
+            <li><a href="#kontakt">Shop</a></li>
+        </ul>
+        <button class="hamburger" onclick="toggleNav(this)" aria-label="Menü">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="badge">Handverlesen & einzigartig</span>
+            <h1>Backen.<br>Feiern.<br><span>Streuseln.</span></h1>
+            <p>Zuckerstreusel für jeden Anlass – von der schlichten Geburtstagstorte bis zur traumhaften Hochzeitstorte. Handverlesen, kreativ, einzigartig.</p>
+            <a href="https://www.superstreusel.de" target="_blank" class="btn">Zum Shop</a>
+            <a href="#produkte" class="btn btn-outline">Sortiment</a>
+        </div>
+        <div class="hero-image"></div>
+    </section>
+
+    <!-- Unternehmensvorstellung -->
+    <section id="ueber-uns" style="background: #fff5f6; max-width:100%; padding: 6rem 0; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5;">
+        <div style="max-width:1200px; margin:0 auto; padding: 0 4rem;">
+            <div class="section-header">
+                <span class="badge">Unternehmensvorstellung</span>
+                <h2>Superstreusel auf einen Blick</h2>
+                <p>Geschäftsidee, Zielgruppe, Alleinstellungsmerkmal und Vision</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-item">
+                    <div class="divider"></div>
+                    <h3>Geschäftsidee</h3>
+                    <p>Superstreusel ist ein Online-Shop für Spezialzuckerstreusel und Backdekorationen. Das Unternehmen bietet thematisch sortierte Streusel-Kollektionen für Hochzeiten, Geburtstage, Weihnachten und weitere Anlässe an – handverlesen und in hoher Qualität, die im Einzelhandel nicht erhältlich ist.</p>
+                </div>
+                <div class="about-item">
+                    <div class="divider"></div>
+                    <h3>Zielgruppe</h3>
+                    <p>Hauptzielgruppe sind Hobbybäckerinnen und -bäcker zwischen 25 und 45 Jahren, die besonderen Wert auf ansprechende Kuchendekoration legen. Darüber hinaus werden professionelle Konditoreien, Cafés und Eventcaterer als B2B-Kunden angesprochen. Die Community ist überwiegend weiblich und auf Instagram aktiv.</p>
+                </div>
+                <div class="about-item">
+                    <div class="divider"></div>
+                    <h3>Alleinstellungsmerkmal (USP)</h3>
+                    <p>Superstreusel ist Deutschlands einziger spezialisierter Online-Shop für thematische Spezialzuckerstreusel. Während Supermärkte nur Standardware führen, bietet Superstreusel ausschließlich hochwertige Dekorationen nach Anlass – von Rosegold-Perlen bis zu essbaren Figuren. Die treue Community und der First-Mover-Vorteil sichern die Marktposition.</p>
+                </div>
+            </div>
+            <div style="margin-top:3rem; padding:2rem; background:white; border: 1px solid #E5E5E5; text-align:center;">
+                <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:2px; color:#E8566A; margin-bottom:1rem;">Vision &amp; Ziele</div>
+                <p style="font-size:1.1rem; max-width:700px; margin:0 auto; color:#333;">Superstreusel will bis 2027 die führende Marke für Backdekorations-Spezialitäten im deutschsprachigen Raum (D-A-CH) werden – mit einem Sortiment von über 500 Produkten, einem aktiven B2B-Netzwerk aus Konditoreien und einer Community von 100.000+ Backenthusiasten.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophie -->
+    <section>
+        <div class="section-header">
+            <h2>Unsere Philosophie</h2>
+            <p>Mehr als nur Streusel – ein Gefühl für besondere Momente</p>
+        </div>
+        <div class="about-grid">
+            <div class="about-item">
+                <div class="divider"></div>
+                <h3>Einzigartig</h3>
+                <p>Keine 0815-Streuware. Jedes Produkt ist sorgfältig ausgewählt – von essbaren Perlen bis hin zu thematischen Zuckerfiguren für jeden Anlass.</p>
+            </div>
+            <div class="about-item">
+                <div class="divider"></div>
+                <h3>Leidenschaft</h3>
+                <p>Entstanden aus echter Backleidenschaft. Was als Suche nach dem perfekten Streusel begann, ist heute Deutschlands bekanntester Spezialstreusel-Shop.</p>
+            </div>
+            <div class="about-item">
+                <div class="divider"></div>
+                <h3>Schnell</h3>
+                <p>Bestellungen ab 50 € versandkostenfrei. Lieferzeit 2–4 Werktage. Damit dein nächstes Backabenteuer nicht auf sich warten lässt.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Produkte -->
+    <section id="produkte" class="products-section" style="max-width:100%; padding: 8rem 0;">
+        <div style="max-width:1200px; margin: 0 auto; padding: 0 4rem;">
+            <div class="section-header">
+                <h2>Sortiment</h2>
+                <p>Streusel für jeden Moment</p>
+            </div>
+            <div class="products-grid">
+                <div class="product-item">
+                    <div>
+                        <h4>Hochzeitsstreusel-Set</h4>
+                        <p>Edle Perlen, Goldflitter und zarte Blüten – für den schönsten Tag im Leben.</p>
+                    </div>
+                    <span class="price">ab 6,99 €</span>
+                </div>
+                <div class="product-item">
+                    <div>
+                        <h4>Geburtstags-Mix</h4>
+                        <p>Bunte Konfetti-Streusel, Ziffern und Sterne für jede Altersklasse.</p>
+                    </div>
+                    <span class="price">ab 3,99 €</span>
+                </div>
+                <div class="product-item">
+                    <div>
+                        <h4>Weihnachts-Kollektion</h4>
+                        <p>Schneeflocken, Tannenbäume und Rentiere aus reinem Zucker – limitiert.</p>
+                    </div>
+                    <span class="price">ab 4,49 €</span>
+                </div>
+                <div class="product-item">
+                    <div>
+                        <h4>Ostern-Edition</h4>
+                        <p>Küken, Eier und Hasen – zuckersüß und perfekt für Oster-Cupcakes.</p>
+                    </div>
+                    <span class="price">ab 3,99 €</span>
+                </div>
+                <div class="product-item">
+                    <div>
+                        <h4>Regenbogen-Streusel</h4>
+                        <p>Pastellfarben, Sternchen und Herzchen – der Klassiker unter unseren Bestsellern.</p>
+                    </div>
+                    <span class="price">ab 2,99 €</span>
+                </div>
+                <div class="product-item">
+                    <div>
+                        <h4>Profi-Großpackung</h4>
+                        <p>Für Konditoreien und Großbäcker. Dieselbe Qualität, größere Menge, besserer Preis.</p>
+                    </div>
+                    <span class="price">ab 14,99 €</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galerie -->
+    <section id="galerie" style="max-width:100%; padding: 4rem 0 8rem;">
+        <div style="max-width:1200px; margin: 0 auto; padding: 0 4rem;">
+            <div class="section-header">
+                <h2>Galerie</h2>
+                <p>Backinspirationen von unserer Community</p>
+            </div>
+        </div>
+        <div class="gallery-grid" style="max-width:1400px; margin: 0 auto; padding: 0 2rem;">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80" alt="Cupcakes mit Streuseln">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=500&q=80" alt="Hochzeitstorte">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1587668178277-295251f900ce?w=500&q=80" alt="Bunte Streusel">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1611293388250-580b08c4a145?w=500&q=80" alt="Dekorierter Kuchen">
+            </div>
+        </div>
+    </section>
+
+    <!-- Geschichte -->
+    <div id="geschichte" class="story-section">
+        <div class="story-inner">
+            <div class="story-text">
+                <span class="badge">Die Geschichte</span>
+                <h2>Vom Kuchen auf Stöckchen zum Streusel-Imperium</h2>
+                <p>Alles begann mit einer einfachen Idee: Dani Decker backte Kuchen auf Stöckchen, verzierte sie von Hand und verschenkte sie an Freunde. Was als Hobby begann, wuchs schnell über den Freundeskreis hinaus.</p>
+                <p>Als die jüngere Schwester Kati dazustieß, professionalisierte sich das Ganze. Gemeinsam mieteten sie eine kleine Geschäftsstelle an, belieferten Unternehmen bei Firmenfeiern und Jubiläen.</p>
+                <p>Das eigentliche Problem: Für die aufwändigen Verzierungen gab es nirgendwo die passenden Streusel zu kaufen. Supermarkt-Streuware kam nicht infrage. Aus dieser Not wurde eine Idee – und aus der Idee wurde Superstreusel.</p>
+                <p>Heute ist Superstreusel einer der bekanntesten Online-Shops für Spezialzuckerstreusel in Deutschland. Gegründet mit 10.000 € Eigenkapital, ohne einen einzigen Kredit.</p>
+                <a href="https://www.superstreusel.de" target="_blank" class="btn" style="margin-top:1rem;">Jetzt entdecken</a>
+            </div>
+            <div class="story-image"></div>
+        </div>
+    </div>
+
+    <!-- Bewertungen -->
+    <section id="bewertungen">
+        <div class="section-header">
+            <h2>Kundenstimmen</h2>
+            <p>Was unsere Community sagt</p>
+        </div>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">„Die Hochzeitsstreusel waren der absolute Hingucker auf unserer Torte. Qualität top, Lieferung pünktlich. Wir kommen wieder!"</p>
+                <div class="reviewer">Sarah M. – Google</div>
+            </div>
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">„Endlich ein Shop, der wirklich besondere Streusel anbietet. Die Weihnachtskollektion ist einfach zauberhaft."</p>
+                <div class="reviewer">Lena K. – Trustpilot</div>
+            </div>
+            <div class="review-card">
+                <div class="stars">★★★★☆</div>
+                <p class="review-text">„Schnelle Lieferung, großes Sortiment. Hab schon mehrfach bestellt und war bisher immer begeistert. Top Laden!"</p>
+                <div class="reviewer">Thomas R. – Amazon</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontakt -->
+    <section id="kontakt">
+        <div class="contact-section">
+            <div class="contact-info">
+                <h3>Jetzt bestellen</h3>
+                <div class="contact-item">
+                    <h4>Online-Shop</h4>
+                    <p>superstreusel.de</p>
+                </div>
+                <div class="contact-item">
+                    <h4>Versand</h4>
+                    <p>Ab 50 € kostenloser Versand<br>Lieferzeit 2–4 Werktage</p>
+                </div>
+                <div class="contact-item">
+                    <h4>Rechtsform</h4>
+                    <p>Superstreusel UG (haftungsbeschränkt)<br>Hamburg, Deutschland</p>
+                </div>
+                <div class="contact-item">
+                    <h4>Gegründet</h4>
+                    <p>Von Dani & Kati Decker<br>Eigenfinanziert – 10.000 € Startkapital</p>
+                </div>
+                <a href="https://www.superstreusel.de" target="_blank" class="btn">Zum Online-Shop</a>
+            </div>
+            <div class="contact-visual"></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">SUPERSTREUSEL</div>
+        <p>UG (haftungsbeschränkt) &nbsp;|&nbsp; Hamburg &nbsp;|&nbsp; superstreusel.de</p>
+        <p style="margin-top:0.5rem;">Schulprojekt – Wege in die Selbstständigkeit &copy; 2026</p>
+    </footer>
+
+    <!-- Password Overlay -->
+    <div id="pw-overlay" style="
+        position:fixed; inset:0; z-index:9999;
+        background:#FAFAFA;
+        display:flex; align-items:center; justify-content:center;
+        font-family:'Inter',sans-serif;
+    ">
+        <div style="text-align:center; max-width:340px; padding:2rem;">
+            <div style="font-family:'Cormorant Garamond',serif; font-size:2rem; letter-spacing:3px; color:#E8566A; margin-bottom:0.5rem;">SUPERSTREUSEL</div>
+            <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:2px; color:#999; margin-bottom:2.5rem;">Schulprojekt — Zugang erforderlich</div>
+            <input id="pw-input" type="password" placeholder="Passwort eingeben"
+                style="width:100%; padding:0.9rem 1.2rem; border:1px solid #E5E5E5; outline:none;
+                       font-family:'Inter',sans-serif; font-size:0.95rem; color:#1A1A1A;
+                       background:#fff; margin-bottom:0.8rem; display:block;">
+            <div id="pw-error" style="color:#E8566A; font-size:0.8rem; margin-bottom:0.8rem; display:none;">Falsches Passwort.</div>
+            <button onclick="checkPassword()"
+                style="width:100%; padding:0.9rem; background:#E8566A; color:white; border:none;
+                       font-size:0.8rem; text-transform:uppercase; letter-spacing:2px; cursor:pointer;">
+                Zugang
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Password protection
+        var PW = 'WG52';
+        if (sessionStorage.getItem('ss_auth') === '1') {
+            document.getElementById('pw-overlay').style.display = 'none';
+        }
+        document.getElementById('pw-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') checkPassword();
+        });
+        function checkPassword() {
+            var val = document.getElementById('pw-input').value;
+            if (val === PW) {
+                sessionStorage.setItem('ss_auth', '1');
+                document.getElementById('pw-overlay').style.display = 'none';
+            } else {
+                document.getElementById('pw-error').style.display = 'block';
+                document.getElementById('pw-input').value = '';
+                document.getElementById('pw-input').focus();
+            }
+        }
+
+        // Nav toggle
+        function toggleNav(btn) {
+            document.querySelector('.nav-links').classList.toggle('open');
+            btn.classList.toggle('open');
+        }
+        document.querySelectorAll('.nav-links a').forEach(function(a) {
+            a.addEventListener('click', function() {
+                document.querySelector('.nav-links').classList.remove('open');
+                document.querySelector('.hamburger').classList.remove('open');
+            });
+        });
+    </script>
+</body>
+</html>
